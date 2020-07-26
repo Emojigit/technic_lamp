@@ -8,6 +8,6 @@ git clone https://github.com/minetest-mods/technic
 ```
 Then, install this mod to the mod path
 ```
-git clone https://github.com/Emojigit/technic-lamp
+git clone https://github.com/Emojigit/technic_lamp
 ```
 Enjoy!
