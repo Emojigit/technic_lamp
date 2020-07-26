@@ -17,10 +17,10 @@ local illuminate = function(pos, mode)
 				loc = {x = pos.x - x, y = pos.y - y, z = pos.z - z}
 				if mode then
 					if minetest.get_node(loc).name == "air" then
-						minetest.swap_node(loc, {name = "technic:dummy_light_source"})
+						minetest.swap_node(loc, {name = "technic_lamp:dummy_light_source"})
 					end
 				else
-					if minetest.get_node(loc).name == "technic:dummy_light_source" then
+					if minetest.get_node(loc).name == "technic_lamp:dummy_light_source" then
 						minetest.swap_node(loc, {name = "air"})
 					end
 				end
@@ -34,7 +34,7 @@ local led_on = function(pos, node)
 	local meta         = minetest.get_meta(pos)
 	local eu_input     = meta:get_int("LV_EU_input")
 	local machine_name = S("%s LED"):format("LV")
-	local machine_node = "technic:lv_led"
+	local machine_node = "technic_lamp:lv_led"
 	local demand       = 5
 
 	if eu_input < demand then
@@ -51,7 +51,7 @@ local led_off = function(pos, node)
 	local meta         = minetest.get_meta(pos)
 	local eu_input     = meta:get_int("LV_EU_input")
 	local machine_name = S("%s LED"):format("LV")
-	local machine_node = "technic:lv_led"
+	local machine_node = "technic_lamp:lv_led"
 
 	technic.swap_node(pos, machine_node)
 	meta:set_string("infotext", S("%s Unpowered"):format(machine_name))
@@ -65,7 +65,7 @@ local lamp_on = function(pos, node)
 	local meta         = minetest.get_meta(pos)
 	local eu_input     = meta:get_int("LV_EU_input")
 	local machine_name = S("%s Lamp"):format("LV")
-	local machine_node = "technic:lv_lamp"
+	local machine_node = "technic_lamp:lv_lamp"
 	local demand       = 50
 
 	if eu_input < demand then
@@ -84,7 +84,7 @@ local lamp_off = function(pos, node)
 	local meta         = minetest.get_meta(pos)
 	local eu_input     = meta:get_int("LV_EU_input")
 	local machine_name = S("%s Lamp"):format("LV")
-	local machine_node = "technic:lv_lamp"
+	local machine_node = "technic_lamp:lv_lamp"
 
 	illuminate(pos, false)
 	technic.swap_node(pos, machine_node)
@@ -93,7 +93,7 @@ local lamp_off = function(pos, node)
 end
 
 
-minetest.register_node("technic:dummy_light_source", {
+minetest.register_node("technic_lamp:dummy_light_source", {
 	description = S("Dummy light source node"),
 	node_box = {
 		type = "fixed",
@@ -116,7 +116,7 @@ minetest.register_node("technic:dummy_light_source", {
 	groups = { not_in_creative_inventory = 1 }
 })
 
-minetest.register_node("technic:lv_led", {
+minetest.register_node("technic_lamp:lv_led", {
 	description = S("LV LED"),
 	drawtype = "nodebox",
 	node_box = {
@@ -142,10 +142,10 @@ minetest.register_node("technic:lv_led", {
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", S("%s LED"):format("LV"))
 	end,
-	drop = "technic:lv_led"
+	drop = "technic_lamp:lv_led"
 })
 
-minetest.register_node("technic:lv_led_active", {
+minetest.register_node("technic_lamp:lv_led_active", {
 	description = S("LV LED Active"),
 	drawtype = "nodebox",
 	node_box = {
@@ -168,11 +168,11 @@ minetest.register_node("technic:lv_led_active", {
 	can_dig = technic.machine_can_dig,
 	technic_run = led_on,
 	technic_on_disable = led_off,
-	drop = "technic:lv_led"
+	drop = "technic_lamp:lv_led"
 })
 
 
-minetest.register_node("technic:lv_lamp", {
+minetest.register_node("technic_lamp:lv_lamp", {
 	description = S("%s Lamp"):format("LV"),
 	drawtype = "nodebox",
 	node_box = {
@@ -198,11 +198,11 @@ minetest.register_node("technic:lv_lamp", {
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", S("%s Lamp"):format("LV"))
 	end,
-	drop = "technic:lv_lamp",
+	drop = "technic_lamp:lv_lamp",
 })
 
 
-minetest.register_node("technic:lv_lamp_active", {
+minetest.register_node("technic_lamp:lv_lamp_active", {
 	description = S("%s Lamp Active"):format("LV"),
 	drawtype = "nodebox",
 	node_box = {
@@ -226,11 +226,11 @@ minetest.register_node("technic:lv_lamp_active", {
 	technic_run = lamp_on,
 	on_destruct = lamp_off,
 	technic_on_disable = lamp_off,
-	drop = "technic:lv_lamp",
+	drop = "technic_lamp:lv_lamp",
 })
 
 minetest.register_craft({
-	output = 'technic:lv_led 2',
+	output = 'technic_lamp:lv_led 2',
 	recipe = {
 		{'',                           'homedecor:plastic_sheeting',  ''},
 		{'homedecor:plastic_sheeting', 'technic:doped_silicon_wafer', 'homedecor:plastic_sheeting'},
@@ -239,16 +239,16 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = 'technic:lv_lamp',
+	output = 'technic_lamp:lv_lamp',
 	recipe = {
 		{'default:glass',           'default:glass',    'default:glass'},
-		{'technic:lv_led',          'technic:lv_led',   'technic:lv_led'},
+		{'technic_lamp:lv_led',          'technic_lamp:lv_led',   'technic_lamp:lv_led'},
 		{'mesecons_materials:glue', 'technic:lv_cable', 'mesecons_materials:glue'},
 	},
 })
 
-technic.register_machine("LV", "technic:lv_lamp", technic.receiver)
-technic.register_machine("LV", "technic:lv_lamp_active", technic.receiver)
+technic.register_machine("LV", "technic_lamp:lv_lamp", technic.receiver)
+technic.register_machine("LV", "technic_lamp:lv_lamp_active", technic.receiver)
 
-technic.register_machine("LV", "technic:lv_led", technic.receiver)
-technic.register_machine("LV", "technic:lv_led_active", technic.receiver)
+technic.register_machine("LV", "technic_lamp:lv_led", technic.receiver)
+technic.register_machine("LV", "technic_lamp:lv_led_active", technic.receiver)
