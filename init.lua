@@ -55,7 +55,7 @@ local led_off = function(pos, node)
 
 	technic.swap_node(pos, machine_node)
 	meta:set_string("infotext", S("%s Unpowered"):format(machine_name))
-	
+
 	meta:set_int("LV_EU_demand", 0)
 end
 
@@ -175,6 +175,7 @@ minetest.register_node("technic_lamp:lv_led_active", {
 minetest.register_node("technic_lamp:lv_lamp", {
 	description = S("%s Lamp"):format("LV"),
 	drawtype = "nodebox",
+  paramtype2 = "facedir",
 	node_box = {
 		type = "fixed",
 		fixed = {0.5,0.5,0.5,-0.5,-0.2,-0.5}
@@ -187,10 +188,9 @@ minetest.register_node("technic_lamp:lv_lamp", {
 		type = "fixed",
 		fixed = {0.5,0.5,0.5,-0.5,-0.2,-0.5}
 		},
-	tiles       = {"technic_lv_lamp_top.png", "technic_lv_lamp_bottom.png", "technic_lv_lamp_side.png",
-	               "technic_lv_lamp_side.png", "technic_lv_lamp_side.png", "technic_lv_lamp_side.png"},
+	tiles       = {"technic_lv_lamp_top.png", "technic_lv_lamp_bottom.png", "technic_lv_lamp_side.png","technic_lv_lamp_side.png", "technic_lv_lamp_side.png", "technic_lv_lamp_side.png"},
 	groups = {cracky=2, technic_machine=1, technic_lv=1},
-	connect_sides = {"front", "back", "left", "right", "top",},
+	connect_sides = { "top", "bottom", "front", "left", "back", "right" },
 	can_dig = technic.machine_can_dig,
 	technic_run = lamp_on,
 	on_destruct = lamp_off,
@@ -205,6 +205,7 @@ minetest.register_node("technic_lamp:lv_lamp", {
 minetest.register_node("technic_lamp:lv_lamp_active", {
 	description = S("%s Lamp Active"):format("LV"),
 	drawtype = "nodebox",
+  paramtype2 = "facedir",
 	node_box = {
 		type = "fixed",
 		fixed = {0.5,0.5,0.5,-0.5,-0.2,-0.5}
@@ -217,10 +218,9 @@ minetest.register_node("technic_lamp:lv_lamp_active", {
 		type = "fixed",
 		fixed = {0.5,0.5,0.5,-0.5,-0.2,-0.5}
 		},
-	tiles       = {"technic_lv_lamp_top.png", "technic_lv_lamp_bottom.png", "technic_lv_lamp_side.png",
-	               "technic_lv_lamp_side.png", "technic_lv_lamp_side.png", "technic_lv_lamp_side.png"},
+	tiles       = {"technic_lv_lamp_top.png", "technic_lv_lamp_bottom.png", "technic_lv_lamp_side.png","technic_lv_lamp_side.png", "technic_lv_lamp_side.png", "technic_lv_lamp_side.png"},
 	groups = {cracky=2, technic_machine=1, technic_lv=1, not_in_creative_inventory=1},
-	connect_sides = {"front", "back", "left", "right", "top"},
+	connect_sides = { "top", "bottom", "front", "left", "back", "right" },
 	light_source = 1,
 	can_dig = technic.machine_can_dig,
 	technic_run = lamp_on,
